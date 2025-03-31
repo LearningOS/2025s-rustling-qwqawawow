@@ -7,8 +7,6 @@
 // Execute `rustlings hint structs3` or use the `hint` watch subcommand for a
 // hint.
 
-// I AM NOT DONE
-
 #[derive(Debug)]
 struct Package {
     sender_country: String,
@@ -29,11 +27,13 @@ impl Package {
         }
     }
 
-    fn is_international(&self) -> ??? {
-        // Something goes here...
+    fn is_international(&self) -> bool {
+        self.sender_country != self.recipient_country
     }
 
-    fn get_fees(&self, cents_per_gram: i32) -> ??? {
+    fn get_fees(&self, cents_per_gram: i32) -> i32 {
+        return self.weight_in_grams * cents_per_gram;
+
         // Something goes here...
     }
 }
@@ -41,23 +41,18 @@ impl Package {
 #[cfg(test)]
 mod tests {
     use super::*;
-
     #[test]
     #[should_panic]
     fn fail_creating_weightless_package() {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Austria");
-
         Package::new(sender_country, recipient_country, -2210);
     }
-
     #[test]
     fn create_international_package() {
         let sender_country = String::from("Spain");
         let recipient_country = String::from("Russia");
-
         let package = Package::new(sender_country, recipient_country, 1200);
-
         assert!(package.is_international());
     }
 
